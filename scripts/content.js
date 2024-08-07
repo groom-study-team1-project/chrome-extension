@@ -1,4 +1,3 @@
-// 함수 정의: 현재 보이는 collapse 요소에서 중복 제목 확인
 function highlightDuplicatesInVisibleCollapses() {
     const seenTitles = {};
     const visibleCollapses = document.querySelectorAll('.collapse.show');
