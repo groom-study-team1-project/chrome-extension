@@ -65,8 +65,3 @@ function createPastDate(date = 1, now = new Date()) {
 function createNextId(list = []) {
   return Math.max(...list.map((item) => item.id)) + 1;
 }
-
-function observeMutations() {
-  // mutation 작업
-  console.log(HELPER_TAG, "observe Method Test");
-}

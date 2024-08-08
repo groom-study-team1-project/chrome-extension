@@ -3,9 +3,12 @@ const STORAGE_TAG = "[TAG] Storage - ";
 class Storage {
 
   constructor() {
-    this.cache = new Map();
+    this.observer = new Observer(
+        qs("#app"),
+        { attributes: true, childList: true, subtree: true }
+    );
     this.name = 'CacheStorage';
-    this.init();
+    this.cache = this.init();
     console.log(STORAGE_TAG, "Construct Test");
   }
 
@@ -14,6 +17,18 @@ class Storage {
     // 있으면 가져오기
     // 없으면 생성하기
     console.log(STORAGE_TAG, "Initializing Test");
+    const data = localStorage.getItem(this.name);
+    if (data) {
+      console.log(STORAGE_TAG, "Data found");
+      return new Map(JSON.parse(data));
+    }
+    console.log(STORAGE_TAG, "No data found");
+    return this.load();
+  }
+
+  load() {
+    this.observer.mutation();
+    return new Map();
   }
 
   save() {
@@ -24,8 +39,45 @@ class Storage {
     // 모든 정보 가져오기
   }
 
-  get() {
+  get(key) {
     // 객체 가져오기
+  }
+
+}
+
+class Observer {
+
+  constructor(target, config) {
+    this.target = target;
+    this.config = config;
+  }
+
+  mutation() {
+    const observer= new MutationObserver((mutationList) => {
+      for (const mutation of mutationList) {
+        const filteredNodes = Array.from(mutation.addedNodes)
+            .filter((node) => this.mutationSameClassesFilter(node));
+
+        if (filteredNodes.length > 0) {
+          console.log(filteredNodes); // 자식 중 li tag 찾고 작업하기.
+          observer.disconnect();
+          break;
+        }
+      }
+    });
+
+    observer.observe(this.target, this.config);
+  }
+
+  mutationSameClassesFilter(node) {
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return false;
+    }
+
+    const classesName = ['_1h8WRN', '_2fKbgw' , '_1f1oP_'];
+    const nodeClasses = Array.from(node.classList);
+
+    return classesName.every(cls => nodeClasses.includes(cls));
   }
 
 }
