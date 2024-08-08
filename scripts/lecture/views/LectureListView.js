@@ -14,12 +14,17 @@ class LectureListView extends View {
     }
 
     handleClick(event) {
-        console.log(event.target);
-        // li tag && class == _2dEI31
-        // div tag && clas == cz0vwtv
-        // div 안에 svg class == _30zp6b 일 경우
-        // click event 발행
-        // div svg class == _21qqqI일 경우 무반응
+        const target = event.target;
+        const isLiTag = target.tagName === 'LI'
+            && target.classList.contains('_2dEI31')
+            && qs('svg', target);
+        const isDivTag = target.tagName === 'DIV'
+            && target.classList.contains('cz0wtv')
+            && qs('svg._30zp6b', target.parentElement);
+
+        if (isLiTag || isDivTag) {
+            console.log(target, "test");
+        }
     }
 
 }
