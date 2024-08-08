@@ -8,39 +8,30 @@ class Storage {
         { attributes: true, childList: true, subtree: true }
     );
     this.name = 'CacheStorage';
-    this.cache = this.init();
-    console.log(STORAGE_TAG, "Construct Test");
+    this.init();
   }
 
-  init() {
-    // 로컬 스토리지에 있는지 확인
-    // 있으면 가져오기
-    // 없으면 생성하기
-    console.log(STORAGE_TAG, "Initializing Test");
+  async init() {
+    this.cache = await this.load();
+    console.log(this.cache);
+    this.save();
+  }
+
+  async load() {
     const data = localStorage.getItem(this.name);
     if (data) {
-      console.log(STORAGE_TAG, "Data found");
+      console.log(STORAGE_TAG, "load localStorage")
       return new Map(JSON.parse(data));
     }
-    console.log(STORAGE_TAG, "No data found");
-    return this.load();
-  }
-
-  load() {
-    this.observer.mutation();
-    return new Map();
+    return await this.observer.run();
   }
 
   save() {
-    // 변경된 내용 저장
-  }
-
-  findAll() {
-    // 모든 정보 가져오기
+    localStorage.setItem(this.name, JSON.stringify(Array.from(this.cache.entries())));
   }
 
   get(key) {
-    // 객체 가져오기
+    return this.cache.get(key);
   }
 
 }
@@ -52,20 +43,26 @@ class Observer {
     this.config = config;
   }
 
-  mutation() {
-    const observer= new MutationObserver((mutationList) => {
+  run() {
+    return new Promise((resolve) => {
+      this.mutation(resolve);
+    });
+  }
+
+  mutation(resolve) {
+    const observer = new MutationObserver((mutationList) => {
       for (const mutation of mutationList) {
         const filteredNodes = Array.from(mutation.addedNodes)
             .filter((node) => this.mutationSameClassesFilter(node));
 
         if (filteredNodes.length > 0) {
-          this.extractLectures(qs("._2JOIo3"));
+          const lectureList = qs("._2JOIo3");
+          resolve(this.extractLectures(Array.from(lectureList.children)));
           observer.disconnect();
           break;
         }
       }
     });
-
     observer.observe(this.target, this.config);
   }
 
@@ -80,20 +77,27 @@ class Observer {
     return classesName.every(cls => nodeClasses.includes(cls));
   }
 
-  extractLectures(lectureList) {
+  extractLectures(items) {
     const lectureMap = new Map();
-    const items = Array.from(lectureList.children);
 
     for (let i = 0; i < items.length; i += 3) {
-      const liTag = items[i];
-      const collapseDiv = items[i + 1];
-
-      console.log(qs("div.unqGd-", liTag));
-      console.log(qs("a._3ZcQ2Q", collapseDiv));
-      console.log(qs("div._2jSjki > span._29VsDL", collapseDiv));
+      const { lectureTitles, lectureId } = this.extractLectureInfo(items[i], items[i + 1]);
+      for (let lectureTitle of lectureTitles) {
+        if (!lectureMap.has(lectureTitle)) {
+          lectureMap.set(lectureTitle, lectureId);
+        }
+      }
     }
 
     return lectureMap;
+  }
+
+  extractLectureInfo(liTag, collapseDiv) {
+    const lectureId = qs("div.unqGd-", liTag).innerText;
+    const titleTagList = qsAll("div._2jSjki > span._29VsDL", collapseDiv);
+    const lectureTitles = titleTagList.map(it => it.innerText);
+
+    return { lectureTitles, lectureId };
   }
 
 }
