@@ -93,9 +93,9 @@ class Observer {
   }
 
   extractLectureInfo(liTag, collapseDiv) {
-    const lectureId = qs("div.unqGd-", liTag).innerText;
+    const lectureId = qs("div.unqGd-", liTag).innerText.trim();
     const titleTagList = qsAll("div._2jSjki > span._29VsDL", collapseDiv);
-    const lectureTitles = titleTagList.map(it => it.innerText);
+    const lectureTitles = titleTagList.map(it => it.innerText.trim());
 
     return { lectureTitles, lectureId };
   }
