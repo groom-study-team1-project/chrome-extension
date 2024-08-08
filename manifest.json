@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Goorm DeepDive Duplicate Detection",
   "description": "구름 딥다이브 수강생들을 위한 중복강의 감지 확장프로그램",
-  "version": "1.0",
+  "version": "1.1",
   "permissions": [
     "activeTab",
     "scripting"
