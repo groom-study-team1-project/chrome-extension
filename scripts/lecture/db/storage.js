@@ -1,43 +1,47 @@
 const STORAGE_TAG = "[TAG] Storage - ";
 // todo title trim 작업
 class Storage {
-
   constructor() {
-    this.observer = new Observer(
-        qs("#app"),
-        { attributes: true, childList: true, subtree: true }
-    );
-    this.name = 'CacheStorage';
+    this.observer = new Observer(qs("#app"), {
+      attributes: true,
+      childList: true,
+      subtree: true,
+    });
+    this.name = "CacheStorage";
     this.init();
   }
 
   async init() {
     this.cache = await this.load();
+    console.log("here");
     console.log(this.cache);
+    console.log("here");
+
     this.save();
   }
 
   async load() {
     const data = localStorage.getItem(this.name);
     if (data) {
-      console.log(STORAGE_TAG, "load localStorage")
+      console.log(STORAGE_TAG, "load localStorage");
       return new Map(JSON.parse(data));
     }
     return await this.observer.run();
   }
 
   save() {
-    localStorage.setItem(this.name, JSON.stringify(Array.from(this.cache.entries())));
+    localStorage.setItem(
+      this.name,
+      JSON.stringify(Array.from(this.cache.entries()))
+    );
   }
 
   get(key) {
     return this.cache.get(key);
   }
-
 }
 
 class Observer {
-
   constructor(target, config) {
     this.target = target;
     this.config = config;
@@ -52,8 +56,9 @@ class Observer {
   mutation(resolve) {
     const observer = new MutationObserver((mutationList) => {
       for (const mutation of mutationList) {
-        const filteredNodes = Array.from(mutation.addedNodes)
-            .filter((node) => this.mutationSameClassesFilter(node));
+        const filteredNodes = Array.from(mutation.addedNodes).filter((node) =>
+          this.mutationSameClassesFilter(node)
+        );
 
         if (filteredNodes.length > 0) {
           const lectureList = qs("._2JOIo3");
@@ -71,17 +76,20 @@ class Observer {
       return false;
     }
 
-    const classesName = ['_1h8WRN', '_2fKbgw' , '_1f1oP_'];
+    const classesName = ["_1h8WRN", "_2fKbgw", "_1f1oP_"];
     const nodeClasses = Array.from(node.classList);
 
-    return classesName.every(cls => nodeClasses.includes(cls));
+    return classesName.every((cls) => nodeClasses.includes(cls));
   }
 
   extractLectures(items) {
     const lectureMap = new Map();
 
     for (let i = 0; i < items.length; i += 3) {
-      const { lectureTitles, lectureId } = this.extractLectureInfo(items[i], items[i + 1]);
+      const { lectureTitles, lectureId } = this.extractLectureInfo(
+        items[i],
+        items[i + 1]
+      );
       for (let lectureTitle of lectureTitles) {
         if (!lectureMap.has(lectureTitle)) {
           lectureMap.set(lectureTitle, lectureId);
@@ -94,10 +102,9 @@ class Observer {
 
   extractLectureInfo(liTag, collapseDiv) {
     const lectureId = qs("div.unqGd-", liTag).innerText.trim();
-    const titleTagList = qsAll("div._2jSjki > span._29VsDL", collapseDiv);
-    const lectureTitles = titleTagList.map(it => it.innerText.trim());
+    const titleTagList = qsAll("span._29VsDL", collapseDiv);
+    const lectureTitles = titleTagList.map((it) => it.innerText.trim());
 
     return { lectureTitles, lectureId };
   }
-
 }

@@ -1,7 +1,6 @@
 const CONTROLLER_TAG = "[TAG] Controller - ";
 
 class Controller {
-
   constructor(lecture, { lectureListView: lectureListView }) {
     this.lecture = lecture;
     this.lectureListView = lectureListView;
@@ -11,12 +10,29 @@ class Controller {
   }
 
   subscribeEvents() {
-    this.lectureListView.on('validateDuplication', (event) => this.validateDuplication(event.detail))
+    this.lectureListView.on("validateDuplication", (event) =>
+      this.validateDuplication(event.detail)
+    );
   }
 
   validateDuplication({ liTag, collapseDiv }) {
-    console.log(liTag, collapseDiv);
-    // todo 중복 검사 및 변경
+    const lectureId = qs("div.unqGd-", liTag).innerText;
+    const titleTags = qsAll("span._29VsDL", collapseDiv);
+    titleTags.forEach((title) => {
+      const lectureTitle = title.innerText.trim();
+      if (this.lecture.isDuplicate({ lectureId, lectureTitle })) {
+        this.draw(title);
+      }
+    });
   }
 
+  draw(title) {
+    title.textContent += " ";
+
+    const duplicateText = document.createElement("span");
+    duplicateText.textContent = "(중복)";
+    duplicateText.style.color = "red";
+
+    title.appendChild(duplicateText);
+  }
 }
