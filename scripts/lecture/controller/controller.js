@@ -11,7 +11,12 @@ class Controller {
   }
 
   subscribeEvents() {
-    // View Event 처리하기
+    this.lectureListView.on('validateDuplication', (event) => this.validateDuplication(event.detail))
+  }
+
+  validateDuplication({ liTag, collapseDiv }) {
+    console.log(liTag, collapseDiv);
+    // todo 중복 검사 및 변경
   }
 
 }
