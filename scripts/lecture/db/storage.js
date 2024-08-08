@@ -1,5 +1,5 @@
 const STORAGE_TAG = "[TAG] Storage - ";
-
+// todo title trim 작업
 class Storage {
 
   constructor() {
