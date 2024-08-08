@@ -1,6 +1,7 @@
 const LECTURE_LIST_VIEW = "[TAG] Lecture List - ";
 
 class LectureListView extends View {
+
   constructor() {
     super(qs("#app"));
     console.log(LECTURE_LIST_VIEW, "Construct Test");
@@ -20,4 +21,5 @@ class LectureListView extends View {
       this.emit("validateDuplication", { liTag: target, collapseDiv });
     }
   }
+
 }

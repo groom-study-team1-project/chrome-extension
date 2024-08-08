@@ -1,6 +1,7 @@
 const CONTROLLER_TAG = "[TAG] Controller - ";
 
 class Controller {
+  
   constructor(lecture, { lectureListView: lectureListView }) {
     this.lecture = lecture;
     this.lectureListView = lectureListView;
@@ -35,4 +36,5 @@ class Controller {
 
     title.appendChild(duplicateText);
   }
+
 }

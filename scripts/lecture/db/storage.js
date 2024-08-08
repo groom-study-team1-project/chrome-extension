@@ -1,5 +1,5 @@
 const STORAGE_TAG = "[TAG] Storage - ";
-// todo title trim 작업
+
 class Storage {
   constructor() {
     this.observer = new Observer(qs("#app"), {
@@ -13,17 +13,12 @@ class Storage {
 
   async init() {
     this.cache = await this.load();
-    console.log("here");
-    console.log(this.cache);
-    console.log("here");
-
     this.save();
   }
 
   async load() {
     const data = localStorage.getItem(this.name);
     if (data) {
-      console.log(STORAGE_TAG, "load localStorage");
       return new Map(JSON.parse(data));
     }
     return await this.observer.run();
