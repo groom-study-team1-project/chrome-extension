@@ -59,7 +59,7 @@ class Observer {
             .filter((node) => this.mutationSameClassesFilter(node));
 
         if (filteredNodes.length > 0) {
-          console.log(filteredNodes); // 자식 중 li tag 찾고 작업하기.
+          this.extractLectures(qs("._2JOIo3"));
           observer.disconnect();
           break;
         }
@@ -78,6 +78,22 @@ class Observer {
     const nodeClasses = Array.from(node.classList);
 
     return classesName.every(cls => nodeClasses.includes(cls));
+  }
+
+  extractLectures(lectureList) {
+    const lectureMap = new Map();
+    const items = Array.from(lectureList.children);
+
+    for (let i = 0; i < items.length; i += 3) {
+      const liTag = items[i];
+      const collapseDiv = items[i + 1];
+
+      console.log(qs("div.unqGd-", liTag));
+      console.log(qs("a._3ZcQ2Q", collapseDiv));
+      console.log(qs("div._2jSjki > span._29VsDL", collapseDiv));
+    }
+
+    return lectureMap;
   }
 
 }
