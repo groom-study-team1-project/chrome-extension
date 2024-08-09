@@ -31,5 +31,9 @@
         "scripts/lecture/views/LectureListView.js"
       ]
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/icon.png"
+  }
 }
