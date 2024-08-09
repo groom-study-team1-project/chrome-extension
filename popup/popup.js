@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.slider');
 
     chrome.storage.sync.get(['toggleState'], (result) => {
-        const isChecked = result.toggleState || false;
+        const isChecked = result.toggleState;
         checkbox.checked = isChecked;
         updateTooltip(isChecked);
     });
@@ -16,10 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function updateTooltip(isChecked) {
-        if (isChecked) {
-            slider.setAttribute('data-message', 'show');
-        } else {
-            slider.setAttribute('data-message', 'hide');
-        }
+        slider.setAttribute('data-message', isChecked ? 'show' : 'hide');
     }
 });

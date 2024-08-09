@@ -28,6 +28,9 @@ class Controller {
   }
 
   draw(title) {
+    chrome.storage.sync.get(['toggleState'], (result) => {
+      console.log(result.toggleState, typeof(result.toggleState));
+    });
     title.textContent += " ";
 
     const duplicateText = document.createElement("span");
