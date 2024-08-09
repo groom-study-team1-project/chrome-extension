@@ -1,10 +1,7 @@
-const LECTURE_LIST_VIEW = "[TAG] Lecture List - ";
-
 class LectureListView extends View {
 
   constructor() {
     super(qs("#app"));
-    console.log(LECTURE_LIST_VIEW, "Construct Test");
 
     this.bindEvents();
   }

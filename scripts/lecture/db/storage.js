@@ -1,13 +1,11 @@
-const STORAGE_TAG = "[TAG] Storage - ";
-
 class Storage {
+
   constructor() {
-    this.observer = new Observer(qs("#app"), {
-      attributes: true,
-      childList: true,
-      subtree: true,
-    });
+    this.observer = new Observer(
+        qs("#app"), { attributes: true, childList: true, subtree: true }
+    );
     this.name = "CacheStorage";
+
     this.init();
   }
 
@@ -18,10 +16,11 @@ class Storage {
 
   async load() {
     const data = localStorage.getItem(this.name);
+
     if (data) {
       return new Map(JSON.parse(data));
     }
-    return await this.observer.run();
+    return await new Promise((resolve) => this.observer.mutation(resolve));
   }
 
   save() {
@@ -34,18 +33,14 @@ class Storage {
   get(key) {
     return this.cache.get(key);
   }
+
 }
 
 class Observer {
+
   constructor(target, config) {
     this.target = target;
     this.config = config;
-  }
-
-  run() {
-    return new Promise((resolve) => {
-      this.mutation(resolve);
-    });
   }
 
   mutation(resolve) {
@@ -63,6 +58,7 @@ class Observer {
         }
       }
     });
+
     observer.observe(this.target, this.config);
   }
 
@@ -70,7 +66,6 @@ class Observer {
     if (node.nodeType !== Node.ELEMENT_NODE) {
       return false;
     }
-
     const classesName = ["_1h8WRN", "_2fKbgw", "_1f1oP_"];
     const nodeClasses = Array.from(node.classList);
 
@@ -81,10 +76,8 @@ class Observer {
     const lectureMap = new Map();
 
     for (let i = 0; i < items.length; i += 3) {
-      const { lectureTitles, lectureId } = this.extractLectureInfo(
-        items[i],
-        items[i + 1]
-      );
+      const { lectureTitles, lectureId } = this.extractLectureInfo(items[i], items[i + 1]);
+
       for (let lectureTitle of lectureTitles) {
         if (!lectureMap.has(lectureTitle)) {
           lectureMap.set(lectureTitle, lectureId);
@@ -102,4 +95,5 @@ class Observer {
 
     return { lectureTitles, lectureId };
   }
+
 }

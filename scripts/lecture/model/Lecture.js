@@ -1,5 +1,3 @@
-const LECTURE_TAG = "[TAG] Lecture - ";
-
 class Lecture {
 
   constructor(storage) {
