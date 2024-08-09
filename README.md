@@ -1,3 +1,24 @@
+# 사용법
+
+- 원하는 폴더에서 `git clone https://github.com/groom-study-team1-project/chrome-extension.git` 및 압축 해제
+- 주소창에 chrome://extensions 검색
+- <img width="145" alt="image" src="https://github.com/user-attachments/assets/5c7b24ca-31aa-426e-9fb8-1a8255f239db">
+  우측 상단에 개발자 모드 클릭
+- <img width="258" alt="image" src="https://github.com/user-attachments/assets/8aebe28b-747f-4e41-8472-e5bac81634aa">
+  좌측 상단에 프로그램 로드
+- git clone 한 프로그램을 업로드
+- 강의 사이트로 이동해서 F5
+
+---
+
+### V 1.0.1
+```
+Promise 객체를 사용해서 MutationObserver 객체의 속도 저하 문제를 개선했습니다.
+localStorage를 활용해서 맨 처음 사이트 방문할 때만, Mutation 작업을 하도록 개선했습니다.
+스파게티 코드에서 MVC 패턴 구조로 개선했습니다.
+```
+---
+
 # 브랜치 전략
 
 ## Format
