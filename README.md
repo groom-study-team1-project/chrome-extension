@@ -9,13 +9,63 @@
 - git clone 한 프로그램을 업로드
 - 강의 사이트로 이동해서 F5
 
+<br/><br/>
+
+- <img width="437" alt="image" src="https://github.com/user-attachments/assets/e43dac4c-8849-432f-8135-640ca6563754">
+
+  우측 상단에 확장 프로그램 아이콘을 누릅니다.
+
+<br/><br/>
+
+- <img width="285" alt="image" src="https://github.com/user-attachments/assets/0b6caad5-cc10-45f4-96ab-0fd17ea16652">
+
+    우측 상단 확장 프로그램 목록에서 구름 아이콘을 고정합니다.
+
+<br/><br/>
+
+-  <img width="134" alt="image" src="https://github.com/user-attachments/assets/1ba86ac5-b5fe-4253-accd-b7d55340593d">
+      toggle 버튼을 이용해서 중복 제거 및 중복 표시 여부를 선택합니다.
+
 ---
 
-### V 1.0.1
+# 결과물
+
+> HIDE 옵션일 경우,
+
+  <img width="879" alt="image" src="https://github.com/user-attachments/assets/81cc212d-ad30-481f-b714-9319773013dc">
+  <img width="446" alt="image" src="https://github.com/user-attachments/assets/b6664b21-3585-4001-9451-f12024645926">
+
+<br/>
+<br/>
+<br/>
+
+> SHOW 옵션일 경우,
+
+  <img width="879" alt="image" src="https://github.com/user-attachments/assets/a60ddf70-49d7-459a-81c5-51eb02b68590">
+  <img width="446" alt="image" src="https://github.com/user-attachments/assets/4fb0084b-fc30-46c5-9cd5-4c5bb93cac45">
+
+---
+
+# Version
+
+### V 1.1
 ```
 Promise 객체를 사용해서 MutationObserver 객체의 속도 저하 문제를 개선했습니다.
 localStorage를 활용해서 맨 처음 사이트 방문할 때만, Mutation 작업을 하도록 개선했습니다.
 스파게티 코드에서 MVC 패턴 구조로 개선했습니다.
+```
+### V 1.2
+```
+Toggle 버튼으로 중복된 결과를 리스트에서 삭제할 지, 보여줄 지를 선택합니다.
+Toggle 상태가 Hide 일 경우, 중복된 결과를 강의 리스트 정보에서 삭제합니다.
+Toggle 상태가 Show 일 경우, (중복) 이 붙은 태그로 중복 결과를 알 수 있습니다.
+Toggle 정보는 Chrome Storage로 관리하므로 페이지를 벗어나더라도 토글 정보가 유지됩니다.
+```
+### V 1.3
+```
+강의 홈(강의 영상을 시청하지 않는 강의 목록 화면)뿐만 아니라
+강의 메인(강의를 직접적으로 시청하는 화면) 페이지에서도 중복된 결과를 필터링 합니다.
+마찬가지로 토글 기능도 정상 동작합니다. 
 ```
 ---
 
