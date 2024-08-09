@@ -22,22 +22,29 @@ class Controller {
     titleTags.forEach((title) => {
       const lectureTitle = title.innerText.trim();
       if (this.lecture.isDuplicate({ lectureId, lectureTitle })) {
+        this.process(title);
+      }
+    });
+  }
+
+  process(title) {
+    chrome.storage.sync.get(['toggleState'], (result) => {
+      const parentLiTagOfTitle = title.closest("._3ZcQ2Q");
+      parentLiTagOfTitle.style.display = result.toggleState ? "none" : "block";
+
+      if (!title.classList.contains("duplication")) {
+        title.classList.add("duplication");
         this.draw(title);
       }
     });
   }
 
-  draw(title) {
-    chrome.storage.sync.get(['toggleState'], (result) => {
-      console.log(result.toggleState, typeof(result.toggleState));
-    });
-    title.textContent += " ";
+    draw(title) {
+      const duplicateText = document.createElement("span");
+      duplicateText.textContent = " (중복)";
+      duplicateText.style.color = "red";
 
-    const duplicateText = document.createElement("span");
-    duplicateText.textContent = "(중복)";
-    duplicateText.style.color = "red";
-
-    title.appendChild(duplicateText);
-  }
+      title.appendChild(duplicateText);
+    }
 
 }
