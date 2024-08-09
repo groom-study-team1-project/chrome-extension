@@ -72,3 +72,7 @@ input:checked + .slider:before {
 .slider:hover::after {
     opacity: 1;
 }
+
+.toggle-container:hover {
+    margin-top: 35px;
+}
